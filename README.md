@@ -1,5 +1,5 @@
 # Valid Sudoku
-https://leetcode.com/problems/valid-sudoku
+# https://leetcode.com/problems/valid-sudoku
 
 Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
 
@@ -87,15 +87,15 @@ class Solution {
 	int boxColumnOffset = (columnIndex / 3) * BOX_SIZE;
 		
 	for (int i = 0; i < BOX_SIZE; i++) {
-	    for (int j = 0; j < BOX_SIZE; j++) {
-            if (! ((rowIndex == boxRowOffset + i) && (columnIndex == boxColumnOffset + j )) ) {
+	  for (int j = 0; j < BOX_SIZE; j++) {
+             if (! ((rowIndex == boxRowOffset + i) && (columnIndex == boxColumnOffset + j )) ) {
                 if(board[boxRowOffset + i][boxColumnOffset + j] == ch)
                     return false;
-            }    
-        }
-    }	
-
-	return true;
+              }    
+           }
+        }	
+     
+      return true;
     }
 }
 ```
