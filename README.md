@@ -56,46 +56,47 @@ modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invali
 
 ```java
 class Solution {
-    private static final int BOARD_SIZE =9;
-    private static final int BOX_SIZE = 3;
-    
     public boolean isValidSudoku(char[][] board) {
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board.length; j++){
-                if(board[i][j] != '.') {
-                    if(!isValid(board, i, j, board[i][j]))
+        int rows = board.length;
+        int columns = board[0].length;
+        
+        for(int row = 0; row < rows; row++) {
+            for(int column = 0; column < columns; column++) {
+                if(board[row][column] != '.') {
+                    if(!isValid(board, row, column))
                         return false;
                 }
             }
         }
-        return true;
+       return true;                
     }
     
-    private boolean isValid(char[][] board, int rowIndex, int columnIndex, char ch) {
-	// check if the same row alreday have that same digit
-	for (int i = 0; i < BOARD_SIZE; i++) 
-	    if (i != columnIndex && board[rowIndex][i] == ch )
-	      return false;
-		
-	// check if the same column alreday have that same digit
-	for (int j = 0; j < BOARD_SIZE; j++) 
-	    if (j != rowIndex && board[j][columnIndex] == ch )
-	      return false;
-
-        // check if the same subgrid(box) alreday have that same digit
-	int boxRowOffset = (rowIndex / 3) * BOX_SIZE;
-	int boxColumnOffset = (columnIndex / 3) * BOX_SIZE;
-		
-	for (int i = 0; i < BOX_SIZE; i++) {
-	  for (int j = 0; j < BOX_SIZE; j++) {
-             if (! ((rowIndex == boxRowOffset + i) && (columnIndex == boxColumnOffset + j )) ) {
-                if(board[boxRowOffset + i][boxColumnOffset + j] == ch)
-                    return false;
-              }    
-           }
-        }	
-     
-      return true;
+    private boolean isValid(char[][] board, int row, int column) {
+        // Check the row
+        for(int col = 0; col < board[0].length; col++) {
+            if(col != column && board[row][col] == board[row][column])
+                return false;
+        }
+        
+        // Check the column
+        for(int r = 0; r < board.length; r++) {
+            if(r != row && board[r][column] == board[row][column])
+                return false;
+        }
+        
+        // Check Subgrid
+        int subgridStartRow = (row / 3) * 3;
+        int subgridStartCol = (column / 3) * 3;
+        for(int i = subgridStartRow; i < subgridStartRow + 3; i++) {
+            for(int j = subgridStartCol; j < subgridStartCol + 3; j++) {
+                if(i == row && j == column)
+                    continue;
+                else if(board[i][j] == board[row][column])
+                        return false;
+                
+            }
+        }
+        return true;
     }
 }
 ```
